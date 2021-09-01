@@ -73,7 +73,7 @@ gg1 = municipality %>%
   #   palette='YlGnBu'
   # )+
   ggplot2::scale_fill_manual(
-    values=c("beige", "coral1", "burlywood1", "darkseagreen1", "cornflowerblue", "dodgerblue4")
+    values=c("beige", "coral1", "burlywood1", "aquamarine", "cyan", "cyan3")
   )+
   ggplot2::theme_minimal()+
   ggplot2::theme(
@@ -95,7 +95,7 @@ gg2 = municipality %>%
   #  palette='YlGnBu'
   # )+
   ggplot2::scale_fill_manual(
-    values=c("beige", "coral1", "burlywood1", "darkseagreen1", "cornflowerblue", "dodgerblue4")
+    values=c("beige", "coral1", "burlywood1", "aquamarine", "cyan", "cyan3")
   )+
   ggplot2::theme_minimal()+
   ggplot2::theme(
