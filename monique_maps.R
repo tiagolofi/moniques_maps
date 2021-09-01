@@ -69,8 +69,11 @@ municipality %<>%
 gg1 = municipality %>% 
   ggplot2::ggplot()+
   ggplot2::geom_sf(ggplot2::aes(fill=`Faixa EGS 2005`), col='grey45')+
-  ggplot2::scale_fill_brewer(
-    palette='YlGnBu'
+  # ggplot2::scale_fill_brewer(
+  #   palette='YlGnBu'
+  # )+
+  ggplot2::scale_fill_manual(
+    values=c("beige", "coral1", "burlywood1", "darkseagreen1", "cornflowerblue", "dodgerblue4")
   )+
   ggplot2::theme_minimal()+
   ggplot2::theme(
@@ -83,13 +86,16 @@ gg1 = municipality %>%
   )
 
 ggplot2::ggsave(gg1, filename='egs2005.jpg', dpi=600, height = 10, width = 8, limitsize = FALSE)
-ggplot2::ggsave(gg1, filename='egs2005.png', dpi=600, height = 10, width = 8, limitsize = FALSE)
+ggplot2::ggsave(gg1, filename='egs2005v2.png', dpi=600, height = 10, width = 8, limitsize = FALSE)
 
 gg2 = municipality %>% 
   ggplot2::ggplot()+
   ggplot2::geom_sf(ggplot2::aes(fill=`Faixa EGS 2015`), col='grey45')+
-  ggplot2::scale_fill_brewer(
-    palette='YlGnBu'
+  # ggplot2::scale_fill_brewer(
+  #  palette='YlGnBu'
+  # )+
+  ggplot2::scale_fill_manual(
+    values=c("beige", "coral1", "burlywood1", "darkseagreen1", "cornflowerblue", "dodgerblue4")
   )+
   ggplot2::theme_minimal()+
   ggplot2::theme(
@@ -102,4 +108,4 @@ gg2 = municipality %>%
   )
 
 ggplot2::ggsave(gg2, filename='egs2015.jpg', dpi=600, height = 10, width = 8, limitsize = FALSE)
-ggplot2::ggsave(gg2, filename='egs2015.png', dpi=600, height = 10, width = 8, limitsize = FALSE)
+ggplot2::ggsave(gg2, filename='egs2015v2.png', dpi=600, height = 10, width = 8, limitsize = FALSE)
