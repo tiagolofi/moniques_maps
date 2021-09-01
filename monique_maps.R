@@ -83,6 +83,7 @@ gg1 = municipality %>%
   )
 
 ggplot2::ggsave(gg1, filename='egs2005.jpg', dpi=600, height = 10, width = 8, limitsize = FALSE)
+ggplot2::ggsave(gg1, filename='egs2005.png', dpi=600, height = 10, width = 8, limitsize = FALSE)
 
 gg2 = municipality %>% 
   ggplot2::ggplot()+
@@ -101,3 +102,4 @@ gg2 = municipality %>%
   )
 
 ggplot2::ggsave(gg2, filename='egs2015.jpg', dpi=600, height = 10, width = 8, limitsize = FALSE)
+ggplot2::ggsave(gg2, filename='egs2015.png', dpi=600, height = 10, width = 8, limitsize = FALSE)
