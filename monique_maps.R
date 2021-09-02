@@ -28,38 +28,26 @@ municipality %<>%
   dplyr::mutate(
     `Faixa EGS 2005` = factor(
       dplyr::case_when(
-        dplyr::between(municipality$`EGS 2005`, 0.005, 0.91499999) ~ "0,005 a 0,914", 
-        dplyr::between(municipality$`EGS 2005`, 0.9149999, 1.2199999) ~ "0,915 a 1,219",
-        dplyr::between(municipality$`EGS 2005`, 1.2209999, 1.5599999) ~ "1,220 a 1,559", 
-        dplyr::between(municipality$`EGS 2005`, 1.5609999, 1.9409999) ~ "1,560 a 1,940", 
-        dplyr::between(municipality$`EGS 2005`, 1.9419999, 8.5) ~ "acima de 1,941",
-        is.na(municipality$`EGS 2005`) ~ 'Sem info',
+        municipality$`EGS 2005` < 1 ~ "Ineficiente", 
+        municipality$`EGS 2005` >= 1 ~ "Eficiente",
+        is.na(municipality$`EGS 2005`) ~ "Sem info",
       ),
       levels = c(
         "Sem info",
-        "0,005 a 0,914", 
-        "0,915 a 1,219",
-        "1,220 a 1,559", 
-        "1,560 a 1,940", 
-        "acima de 1,941"
+        "Ineficiente",
+        "Eficiente"
       )
     ),
     `Faixa EGS 2015` = factor(
       dplyr::case_when(
-        dplyr::between(municipality$`EGS 2005`, 0.005, 0.672999999) ~ "0,005 a 0,672", 
-        dplyr::between(municipality$`EGS 2005`, 0.673999999, 0.858999999) ~ "0,673 a 0,858",
-        dplyr::between(municipality$`EGS 2005`, 0.859999999, 1.1399999) ~ "0.859 a 1,139", 
-        dplyr::between(municipality$`EGS 2005`, 1.1409999, 1.46199999) ~ "1,140 a 1,461", 
-        dplyr::between(municipality$`EGS 2005`, 1.46299999, 289) ~ "acima de 1,462",
-        is.na(municipality$`EGS 2005`) ~ 'Sem info',
+        municipality$`EGS 2005` < 1 ~ "Ineficiente", 
+        municipality$`EGS 2005` >= 1 ~ "Eficiente",
+        is.na(municipality$`EGS 2005`) ~ "Sem info",
       ),
       levels = c(
         "Sem info",
-        "0,005 a 0,672", 
-        "0,673 a 0,858",
-        "0.859 a 1,139", 
-        "1,140 a 1,461",  
-        "acima de 1,462"
+        "Ineficiente",
+        "Eficiente"
       )
     )
   )
@@ -68,12 +56,12 @@ municipality %<>%
 
 gg1 = municipality %>% 
   ggplot2::ggplot()+
-  ggplot2::geom_sf(ggplot2::aes(fill=`Faixa EGS 2005`), col='grey45')+
-  # ggplot2::scale_fill_brewer(
-  #   palette='YlGnBu'
-  # )+
+  ggplot2::geom_sf(ggplot2::aes(fill=`Faixa EGS 2005`), col='white')+
   ggplot2::scale_fill_manual(
-    values=c("beige", "coral1", "burlywood1", "aquamarine", "cyan", "cyan3")
+    values=c("beige", "coral2", "cyan4")
+  )+
+  ggplot2::labs(
+    fill="EGSi 2005"
   )+
   ggplot2::theme_minimal()+
   ggplot2::theme(
@@ -85,17 +73,16 @@ gg1 = municipality %>%
     panel.grid.minor = ggplot2::element_blank()
   )
 
-ggplot2::ggsave(gg1, filename='egs2005.jpg', dpi=600, height = 10, width = 8, limitsize = FALSE)
-ggplot2::ggsave(gg1, filename='egs2005v2.png', dpi=600, height = 10, width = 8, limitsize = FALSE)
+ggplot2::ggsave(gg1, filename='egs2005.png', dpi=600, height = 10, width = 8, limitsize = FALSE)
 
 gg2 = municipality %>% 
   ggplot2::ggplot()+
-  ggplot2::geom_sf(ggplot2::aes(fill=`Faixa EGS 2015`), col='grey45')+
-  # ggplot2::scale_fill_brewer(
-  #  palette='YlGnBu'
-  # )+
+  ggplot2::geom_sf(ggplot2::aes(fill=`Faixa EGS 2015`), col='white')+
   ggplot2::scale_fill_manual(
-    values=c("beige", "coral1", "burlywood1", "aquamarine", "cyan", "cyan3")
+    values=c("beige", "coral2", "cyan4")
+  )+
+  ggplot2::labs(
+    fill="EGSi 2015"
   )+
   ggplot2::theme_minimal()+
   ggplot2::theme(
@@ -107,5 +94,4 @@ gg2 = municipality %>%
     panel.grid.minor = ggplot2::element_blank()
   )
 
-ggplot2::ggsave(gg2, filename='egs2015.jpg', dpi=600, height = 10, width = 8, limitsize = FALSE)
-ggplot2::ggsave(gg2, filename='egs2015v2.png', dpi=600, height = 10, width = 8, limitsize = FALSE)
+ggplot2::ggsave(gg2, filename='egs2015.png', dpi=600, height = 10, width = 8, limitsize = FALSE)
