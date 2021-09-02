@@ -40,8 +40,8 @@ municipality %<>%
     ),
     `Faixa EGS 2015` = factor(
       dplyr::case_when(
-        municipality$`EGS 2005` < 1 ~ "Ineficiente", 
-        municipality$`EGS 2005` >= 1 ~ "Eficiente",
+        municipality$`EGS 2015` < 1 ~ "Ineficiente", 
+        municipality$`EGS 2015` >= 1 ~ "Eficiente",
         is.na(municipality$`EGS 2005`) ~ "Sem info",
       ),
       levels = c(
