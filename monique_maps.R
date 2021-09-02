@@ -56,7 +56,7 @@ municipality %<>%
 
 gg1 = municipality %>% 
   ggplot2::ggplot()+
-  ggplot2::geom_sf(ggplot2::aes(fill=`Faixa EGS 2005`), col='white')+
+  ggplot2::geom_sf(ggplot2::aes(fill=`Faixa EGS 2005`), col='grey30')+
   ggplot2::scale_fill_manual(
     values=c("beige", "coral2", "cyan4")
   )+
@@ -77,7 +77,7 @@ ggplot2::ggsave(gg1, filename='egs2005.png', dpi=600, height = 10, width = 8, li
 
 gg2 = municipality %>% 
   ggplot2::ggplot()+
-  ggplot2::geom_sf(ggplot2::aes(fill=`Faixa EGS 2015`), col='white')+
+  ggplot2::geom_sf(ggplot2::aes(fill=`Faixa EGS 2015`), col='grey30')+
   ggplot2::scale_fill_manual(
     values=c("beige", "coral2", "cyan4")
   )+
