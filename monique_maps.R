@@ -7,10 +7,34 @@ require(magrittr)
 
 #### CARREGANDO DADOS ####
 
-municipality = geobr::read_municipality(21, 2018)
-municipality$code_muni %<>% stringr::str_sub(1, 6) %>% as.numeric() 
+## adicionando mesorregioes ###
+
+meso <- readxl::read_excel('MUNICÍPIOS POR REGIÃO.xlsx')
+
+meso %<>%
+  tidyr::gather(key='regiao', value='municipio') %>% 
+  dplyr::filter(!is.na(municipio))
+
+meso$municipio %<>% stringr::str_replace_all('Conceição do Lago Açu', 'Conceição do Lago-Açu')
+meso$municipio %<>% stringr::str_replace_all('Governador Edson Lobão', 'Governador Edison Lobão')
+meso$municipio %<>% stringr::str_replace_all('Itapecuru-Mirim', 'Itapecuru Mirim')
+meso$municipio %<>% stringr::str_replace_all('São João do Caru', 'São João do Carú')
+meso$municipio %<>% stringr::str_replace_all('São José dos Patos', 'São João dos Patos')
+meso$municipio %<>% stringr::str_replace_all('Sucupira do Riação', 'Sucupira do Riachão')
 
 dados = readxl::read_excel('PLANILHA PARA MAPAS.xlsx')
+
+dados %<>% dplyr::left_join(
+  meso, 
+  by = c('MUNICÍPIO' = 'municipio')
+)
+
+dados$regiao[61] <- 'OESTE'
+
+## baixando mapa
+
+municipality = geobr::read_municipality(21, 2018)
+municipality$code_muni %<>% stringr::str_sub(1, 6) %>% as.numeric() 
 
 municipality %<>%
   dplyr::left_join(
@@ -95,3 +119,21 @@ gg2 = municipality %>%
   )
 
 ggplot2::ggsave(gg2, filename='egs2015.png', dpi=600, height = 10, width = 8, limitsize = FALSE)
+
+#### tabela ####
+
+tabela <- municipality %>% 
+  dplyr::select(regiao, `Faixa EGS 2005`, `Faixa EGS 2015`) %>% 
+  dplyr::filter(!is.na(regiao)) %>% 
+  dplyr::group_by(regiao) %>% 
+  dplyr::summarise(
+    eficientes_2005 = sum(`Faixa EGS 2005` == 'Eficiente'),
+    ineficientes_2005 = sum(`Faixa EGS 2005` == 'Ineficiente'),
+    eficientes_2015 = sum(`Faixa EGS 2015` == 'Eficiente'),
+    ineficientes_2015 = sum(`Faixa EGS 2015` == 'Ineficiente'),
+    .groups = 'drop'
+  ) 
+
+tabela['geom'] = NULL
+
+openxlsx::write.xlsx(tabela, file='EFICIENCIA POR MESORREGIAO.xlsx', row.names = FALSE)
